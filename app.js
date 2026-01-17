@@ -9,12 +9,13 @@ import apiRouter from './routes/api.js';
 
 const app = express();
 
-// --- Middleware ---
 
-// 2. ADD THIS BLOCK
 app.use(cors({
-    origin: 'http://localhost:5173', // The exact URL of your frontend
-    credentials: true,               // Required since you are using cookie-parser
+    origin: [
+      'http://localhost:5173',
+      /\.vercel\.app$/
+    ], 
+    credentials: true,               
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -32,7 +33,7 @@ app.get('/', (req, res) => {
 app.use(errorMiddleware);
 
 app.listen(PORT, async () => {
-  console.log(`Served on PORT  http://localhost:${PORT}`);
+  console.log(`Served on PORT  ${PORT}`);
   await connectToDatabase()
 })
 
